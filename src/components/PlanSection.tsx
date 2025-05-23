@@ -1,7 +1,13 @@
 import React, { useState, useContext } from 'react';
 import {
-  IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-  IonButton, IonTextarea, IonText
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonButton,
+  IonTextarea,
+  IonText,
+  IonSpinner
 } from '@ionic/react';
 import { PlanContext } from '../contexts/PlanContext';
 import { PlanResponse } from '../types/plan';
@@ -9,17 +15,25 @@ import { PlanResponse } from '../types/plan';
 interface Props {
   sectionKey: keyof PlanResponse;
   title: string;
-  content: any;
+  content: string;
 }
 
 const PlanSection: React.FC<Props> = ({ sectionKey, title, content }) => {
   const { regenerateSection, sendFeedback } = useContext(PlanContext);
   const [feedback, setFeedback] = useState('');
+  const [sectionLoading, setSectionLoading] = useState(false);
 
-  const handleRegenerate = () => regenerateSection(sectionKey);
-  const handleSend = () => {
-    sendFeedback(sectionKey, feedback);
+  const handleRegenerate = async () => {
+    setSectionLoading(true);
+    await regenerateSection(sectionKey);
+    setSectionLoading(false);
+  };
+
+  const handleSend = async () => {
+    setSectionLoading(true);
+    await sendFeedback(sectionKey, feedback);
     setFeedback('');
+    setSectionLoading(false);
   };
 
   return (
@@ -29,11 +43,22 @@ const PlanSection: React.FC<Props> = ({ sectionKey, title, content }) => {
       </IonCardHeader>
       <IonCardContent>
         <pre style={{ whiteSpace: 'pre-wrap' }}>
-          {typeof content === 'object' ? JSON.stringify(content, null, 2) : content}
+          {content}
         </pre>
 
-        <IonButton expand="block" onClick={handleRegenerate}>
-          Regenerate
+        <IonButton
+          expand="block"
+          onClick={handleRegenerate}
+          disabled={sectionLoading}
+        >
+          {sectionLoading ? (
+            <>
+              <IonSpinner slot="start" />
+              Regenerating...
+            </>
+          ) : (
+            'Regenerate'
+          )}
         </IonButton>
 
         <IonTextarea
@@ -53,5 +78,4 @@ const PlanSection: React.FC<Props> = ({ sectionKey, title, content }) => {
     </IonCard>
   );
 };
-
 export default PlanSection;
