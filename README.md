@@ -41,3 +41,8 @@ npm i
 ```
 npm run dev
 ```
+
+## Here are the main AI chats used for building this project. 
+
+1. Project setup and wiring main AI components: https://chatgpt.com/share/683050e2-fb5c-800f-b61f-1aed0a4ed987
+2. UI improvements: https://chatgpt.com/share/683090ef-d7f4-800f-8e75-0d7a91a1145d
