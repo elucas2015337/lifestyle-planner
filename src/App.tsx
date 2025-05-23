@@ -32,21 +32,18 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { PlanProvider } from './contexts/PlanContext';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
+    <PlanProvider>
+      <IonReactRouter>
+        <Route path="/" component={Home} exact />
+        <Route render={() => <Redirect to="/" />} />
+      </IonReactRouter>
+    </PlanProvider>
   </IonApp>
 );
 
