@@ -21,7 +21,7 @@ npm install -g @ionic/cli
 2. Clone the repository
 
 ```
-git clone https://github.com/procesoseficientes/sonda-2.git](https://github.com/elucas2015337/lifestyle-planner.git
+git clone https://github.com/elucas2015337/lifestyle-planner.git
 ```
   "v0" branch does not contain the improved UI, switch to "ui_rebuild" branch to see the final version
 
